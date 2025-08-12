@@ -1,0 +1,17 @@
+.accordion {
+  background-color: #f7fbfd;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .title {
+    .btn {
+      border: none;
+      background-color: transparent;
+      font-weight: 700;
+    }
+  }
+}
+
+.content {
+}

@@ -1,4 +1,4 @@
-import type { ITask } from "./todos.types";
+import type { ITask } from "../../types/tasks.interface";
 
 export const tasksData: ITask[] = [
   {

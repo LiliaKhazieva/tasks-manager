@@ -1,0 +1,24 @@
+.task {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  .content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+}
+.active {
+  background-color: rgb(227, 232, 230);
+}
+
+.sub {
+  display: block;
+  padding-left: 1.5rem;
+}
+
+.hide {
+  display: none;
+}

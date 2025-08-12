@@ -2,12 +2,21 @@ import { Checkbox } from "radix-ui";
 import styles from "./Checkbox.module.scss";
 import { CheckIcon } from "@radix-ui/react-icons";
 
-export function CheckboxContainer() {
+export function CheckboxContainer({ checked, onChange }) {
   return (
-    <Checkbox.Root className={styles.Root} defaultChecked id="c1">
-      <Checkbox.Indicator className={styles.Indicator}>
-        <CheckIcon />
-      </Checkbox.Indicator>
-    </Checkbox.Root>
+    <form>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Checkbox.Root
+          className={styles.Root}
+          id="c1"
+          checked={checked}
+          onChange={onChange}
+        >
+          <Checkbox.Indicator className={styles.Indicator}>
+            <CheckIcon width={16} />
+          </Checkbox.Indicator>
+        </Checkbox.Root>
+      </div>
+    </form>
   );
 }

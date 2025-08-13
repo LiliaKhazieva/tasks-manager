@@ -1,0 +1,11 @@
+.content {
+  padding: 10px;
+  .title {
+    font-weight: 700;
+  }
+  p {
+    padding-top: 10px;
+    overflow-y: scroll;
+    height: 300px;
+  }
+}

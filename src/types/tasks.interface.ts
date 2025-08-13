@@ -4,3 +4,16 @@ export interface ITask {
   isCompleted: boolean;
   subTasks: ITask[];
 }
+
+export interface ISubTaskAdd {
+  id: string;
+  array: ITask[];
+  task: ITask;
+}
+
+export type activeTaskSearchProps = (
+  id: string,
+  array: ITask[]
+) => ITask | null;
+
+export type completedCheckboxProps = (id: string, array: ITask[]) => ITask[];

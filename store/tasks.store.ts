@@ -1,17 +1,12 @@
-export type TodoType = {
-  id: string;
-  title: string;
-  text: string;
-  isCompleted: boolean;
-  subTasks: TodoType[];
-};
-
 import { makeAutoObservable } from "mobx";
-import type { ITask } from "../src/types/tasks.interface";
+import type {
+  activeTaskSearchProps,
+  ITask,
+} from "../src/types/tasks.interface";
 
 class Tasks {
   taskArray: ITask[] = localStorage.tasks ? JSON.parse(localStorage.tasks) : [];
-  activeTask: ITask | null = null;
+  currentTask: ITask | null = null;
   taskTitle = "";
 
   constructor() {
@@ -26,7 +21,7 @@ class Tasks {
     if (this.taskTitle.trim().length) {
       this.taskArray.push({
         id: Math.random().toString(),
-        title: this.taskTitle,
+        title: `Задача ${this.taskTitle}`,
         isCompleted: false,
         subTasks: [],
       });
@@ -36,7 +31,7 @@ class Tasks {
     }
   };
 
-  subTaskAdding = (id: string, array: ITask[], task: ITask) => {
+  addSubtaskIntinite = (id: string, array: ITask[], task: ITask) => {
     return array.reduce((arr: ITask[], item) => {
       if (item.id === id) {
         item.subTasks.push(task);
@@ -44,7 +39,7 @@ class Tasks {
       } else {
         arr.push({
           ...item,
-          subTasks: this.subTaskAdding(id, item.subTasks, task),
+          subTasks: this.addSubtaskIntinite(id, item.subTasks, task),
         });
       }
       return arr;
@@ -53,16 +48,70 @@ class Tasks {
 
   addSubtask = (id: string) => {
     if (this.taskTitle.trim().length) {
-      const task = {
-        id: Math.random(),
+      const task: ITask = {
+        id: Math.random().toString(),
         title: this.taskTitle,
         isCompleted: false,
         subTasks: [],
       };
-      this.taskArray = this.subTaskAdding(id, this.taskArray, task);
+      this.taskArray = this.addSubtaskIntinite(id, this.taskArray, task);
       localStorage.setItem("tasks", JSON.stringify(this.taskArray));
       this.taskTitle = "";
     }
+  };
+
+  subTasksCompleteToggler = (array: ITask[], state: boolean) => {
+    return array.reduce((arr: ITask[], item) => {
+      arr.push({
+        ...item,
+        isCompleted: state,
+        subTasks: this.subTasksCompleteToggler(item.subTasks, state),
+      });
+
+      return arr;
+    }, []);
+  };
+
+  addSelectedCheckbox = (id: string, array: ITask[]) => {
+    return array.reduce((arr: ITask[], task) => {
+      if (task.id !== id) {
+        arr.push({
+          ...task,
+          subTasks: this.addSelectedCheckbox(id, task.subTasks),
+        });
+      } else {
+        arr.push({
+          ...task,
+          isCompleted: !task.isCompleted,
+          subTasks: this.subTasksCompleteToggler(
+            task.subTasks,
+            !task.isCompleted
+          ),
+        });
+      }
+
+      return arr;
+    }, []);
+  };
+
+  completeCheckbox = (id: string) => {
+    this.taskArray = this.addSelectedCheckbox(id, this.taskArray);
+    localStorage.setItem("tasks", JSON.stringify(this.taskArray));
+  };
+
+  activeTaskSearch: activeTaskSearchProps = (id, array) => {
+    for (let item of array) {
+      if (item.id === id) {
+        return item;
+      }
+      const subTask = this.activeTaskSearch(id, item.subTasks);
+      return subTask;
+    }
+    return null;
+  };
+
+  activeTask = (id: string) => {
+    this.currentTask = this.activeTaskSearch(id, this.taskArray);
   };
 }
 

@@ -4,14 +4,15 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  font-weight: 600;
   .content {
     display: flex;
     align-items: center;
     gap: 10px;
   }
 }
-.active {
-  background-color: rgb(227, 232, 230);
+.task_active {
+  background-color: #f7fbfd;
 }
 
 .sub {

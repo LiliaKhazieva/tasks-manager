@@ -20,7 +20,13 @@ function Home() {
         <div className="left">
           {isOpen && (
             <Modal onClose={closeHandler}>
-              <button className="btn" onClick={() => tasks.addTask()}>
+              <button
+                className="btn"
+                onClick={() => {
+                  tasks.addTask();
+                  closeHandler();
+                }}
+              >
                 Сохранить
               </button>
             </Modal>

@@ -5,10 +5,10 @@ import styles from "./TaskDescription.module.scss";
 const TaskDescription = observer(() => {
   return (
     <>
-      {tasks.activeTask && (
+      {tasks.currentTask && (
         <div className={styles.content}>
           <h2 className={styles.title}>Описание задачи</h2>
-          <p>{tasks.activeTask.title}</p>
+          <p>{tasks.currentTask.title}</p>
         </div>
       )}
     </>

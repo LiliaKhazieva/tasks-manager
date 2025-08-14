@@ -4,7 +4,12 @@ import styles from "./Task.module.scss";
 import Modal from "../modal/Modal";
 import tasks from "../../../store/tasks.store";
 import { useState } from "react";
-import { CaretDownIcon, CaretRightIcon, PlusIcon } from "@radix-ui/react-icons";
+import {
+  CaretDownIcon,
+  CaretRightIcon,
+  Cross2Icon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import { CheckboxContainer } from "../../ui/checkbox/Checkbox";
 
 interface IProps {
@@ -24,7 +29,13 @@ const Task = observer(({ task }: IProps) => {
     <>
       {isModalShow && (
         <Modal onClose={() => setIsModalShow(false)}>
-          <button className="btn" onClick={() => tasks.addSubtask(id)}>
+          <button
+            className="btn"
+            onClick={() => {
+              tasks.addSubtask(id);
+              modalHandler();
+            }}
+          >
             Добавить подзадачу
           </button>
         </Modal>
@@ -35,7 +46,7 @@ const Task = observer(({ task }: IProps) => {
           tasks.activeTask(id);
         }}
         className={
-          isShowAccordion
+          tasks.currentTask?.id === id
             ? `${styles.task} ${styles.task_active}`
             : `${styles.task}`
         }
@@ -55,9 +66,14 @@ const Task = observer(({ task }: IProps) => {
             />
           )}
           <h3 className={styles.title}>{title}</h3>
-          <button onClick={modalHandler}>
-            <PlusIcon />
-          </button>
+
+          <PlusIcon onClick={modalHandler} />
+          <Cross2Icon
+            onClick={() => {
+              alert("Вы уверены что хотите удалить задачу?");
+              tasks.removeTask(id);
+            }}
+          />
         </div>
         <CheckboxContainer
           id={id}
@@ -69,13 +85,7 @@ const Task = observer(({ task }: IProps) => {
         />
       </li>
       {subTasks.length > 0 && (
-        <div
-          className={
-            isShowAccordion
-              ? `${styles.sub} ${styles.task_active}`
-              : styles.hide
-          }
-        >
+        <div className={isShowAccordion ? `${styles.sub}` : styles.hide}>
           {subTasks.map((subTask) => (
             <Task key={subTask.id} task={subTask} />
           ))}

@@ -105,13 +105,35 @@ class Tasks {
         return item;
       }
       const subTask = this.activeTaskSearch(id, item.subTasks);
-      return subTask;
+
+      if (subTask) {
+        return subTask;
+      }
     }
     return null;
   };
 
   activeTask = (id: string) => {
     this.currentTask = this.activeTaskSearch(id, this.taskArray);
+  };
+
+  removeFilter = (id: string, array: ITask[]) => {
+    return array.reduce((arr: ITask[], item) => {
+      if (item.id !== id) {
+        arr.push({ ...item, subTasks: this.removeFilter(id, item.subTasks) });
+      }
+      return arr;
+    }, []);
+  };
+
+  removeTask = (id: string) => {
+    this.taskArray = this.removeFilter(id, this.taskArray);
+    localStorage.setItem("tasks", JSON.stringify(this.taskArray));
+
+    if (!this.taskArray.length) {
+      this.currentTask = null;
+      localStorage.removeItem("tasks");
+    }
   };
 }
 

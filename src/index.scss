@@ -29,19 +29,31 @@ body {
     width: 70%;
     margin: 0 auto;
     padding: 40px;
+    @media (max-width: 968px) {
+      padding: 10px;
+      width: 100%;
+    }
     .content {
       margin-top: 30px;
       display: flex;
       gap: 30px;
       .left,
       .right {
-        padding: 20px;
         width: 50%;
         min-height: 400px;
         overflow: scroll;
+        @media (max-width: 968px) {
+          width: 100%;
+          min-height: 100px;
+        }
       }
       .right {
         background-color: #dce0e1;
+        padding: 20px;
+      }
+      @media (max-width: 968px) {
+        flex-direction: column;
+        padding: 0;
       }
     }
   }

@@ -31,6 +31,17 @@ class Tasks {
     }
   };
 
+  updateTask = (id: string, newTitle: string) => {
+    const index = this.taskArray.findIndex((todo) => todo.id === id);
+    if (index !== -1) {
+      this.taskArray[index] = {
+        ...this.taskArray[index],
+        title: `Задача ${newTitle}`,
+      };
+      localStorage.setItem("tasks", JSON.stringify(this.taskArray));
+    }
+  };
+
   addSubtaskIntinite = (id: string, array: ITask[], task: ITask) => {
     return array.reduce((arr: ITask[], item) => {
       if (item.id === id) {
@@ -50,7 +61,7 @@ class Tasks {
     if (this.taskTitle.trim().length) {
       const task: ITask = {
         id: Math.random().toString(),
-        title: this.taskTitle,
+        title: `Задача ${this.taskTitle}`,
         isCompleted: false,
         subTasks: [],
       };

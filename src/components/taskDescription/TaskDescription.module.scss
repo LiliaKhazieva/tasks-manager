@@ -1,11 +1,25 @@
 .content {
   padding: 10px;
-  .title {
-    font-weight: 700;
+  .description {
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .title {
+      font-weight: 700;
+    }
   }
   p {
     padding-top: 10px;
     overflow-y: scroll;
     height: 300px;
   }
+}
+
+.input {
+  background-color: #fff;
+  padding: 10px;
+  border: #b8aeae 1px solid;
+  margin: 10px 10px 10px 0;
+  width: 100%;
 }

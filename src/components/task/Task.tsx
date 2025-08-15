@@ -21,9 +21,9 @@ const Task = observer(({ task }: IProps) => {
   const [isShowAccordion, setIsShowAccordion] = useState(false);
   const [isModalShow, setIsModalShow] = useState(false);
 
-  function modalHandler() {
+  const modalHandler = () => {
     setIsModalShow(!isModalShow);
-  }
+  };
 
   return (
     <>
@@ -66,7 +66,6 @@ const Task = observer(({ task }: IProps) => {
             />
           )}
           <h3 className={styles.title}>{title}</h3>
-
           <PlusIcon onClick={modalHandler} />
           <Cross2Icon
             onClick={() => {

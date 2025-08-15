@@ -16,6 +16,7 @@ function Home() {
         Добавить задачу
         <PlusIcon />
       </button>
+
       <div className="content">
         <div className="left">
           {isOpen && (
